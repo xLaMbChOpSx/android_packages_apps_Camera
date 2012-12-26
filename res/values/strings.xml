@@ -566,4 +566,8 @@ CHAR LIMIT = NONE] -->
     <string name="pref_camera_focustime_entry_30">30s</string>
     <string name="pref_camera_focustime_entry_infinite">Infinite</string>
 
+     <!-- Settings screen, storage title -->
+     <string name="pref_camera_storage_title">Use External Storage</string>
+     <string name="pref_camera_storage_title_default">No</string>
+
 </resources>
