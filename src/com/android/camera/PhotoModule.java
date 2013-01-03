@@ -467,6 +467,7 @@ public class PhotoModule
         // Surface texture is from camera screen nail and startPreview needs it.
         // This must be done before startPreview.
         mIsImageCaptureIntent = isImageCaptureIntent();
+        mActivity.initStoragePrefs(mPreferences);
         if (reuseNail) {
             mActivity.reuseCameraScreenNail(!mIsImageCaptureIntent);
         } else {
@@ -586,9 +587,6 @@ public class PhotoModule
         initializeZoom();
         updateOnScreenIndicators();
         showTapToFocusToastIfNeeded();
-        onFullScreenChanged(mActivity.isInCameraApp());
-        // Load External storage settings
-        mActivity.initStoragePrefs(mPreferences);
     }
 
     private void initializePhotoControl() {
@@ -1811,9 +1809,6 @@ public class PhotoModule
     public void updateCameraAppView() {
         // Setup Power shutter
         mActivity.initPowerShutter(mPreferences);
-
-        // Load External storage settings
-        mActivity.initStoragePrefs(mPreferences);
     }
 
     @Override
@@ -2684,6 +2679,10 @@ public class PhotoModule
         updateOnScreenIndicators();
         mActivity.initPowerShutter(mPreferences);
         mActivity.initStoragePrefs(mPreferences);
+
+        if (ActivityBase.mStorageToggled) {
+            mActivity.recreate();
+        }
     }
 
     @Override
