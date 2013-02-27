@@ -1111,12 +1111,14 @@ public class VideoModule implements CameraModule,
                 if (mParameters.isZoomSupported() && mZoomRenderer != null) {
                     int index = mZoomValue + 1;
                     processZoomValueChanged(index);
+                    mZoomRenderer.setZoom(index);
                 }
                 return true;
             case KeyEvent.KEYCODE_VOLUME_DOWN:
                 if (mParameters.isZoomSupported() && mZoomRenderer != null) {
                     int index = mZoomValue - 1;
                     processZoomValueChanged(index);
+                    mZoomRenderer.setZoom(index);
                 }
                 return true;
         }
@@ -2513,7 +2515,6 @@ public class VideoModule implements CameraModule,
 
     private void processZoomValueChanged(int index) {
         if (index >= 0 && index <= mZoomMax) {
-            mZoomRenderer.setZoom(index);
             // Not useful to change zoom value when the activity is paused.
             if (mPaused) return;
             mZoomValue = index;
