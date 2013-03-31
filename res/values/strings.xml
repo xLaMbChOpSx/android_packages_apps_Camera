@@ -109,9 +109,6 @@
     <!-- Settings screen, Camcorder setting category title -->
     <string name="pref_camcorder_settings_category">Camcorder settings</string>
 
-    <!-- More Settings screen, storage title -->
-    <string name="pref_camera_storage_title">Storage</string>
-
     <!-- Settings screen, Picture size title -->
     <string name="pref_camera_picturesize_title">Picture size</string>
 
@@ -568,5 +565,9 @@ CHAR LIMIT = NONE] -->
     <string name="pref_camera_focustime_entry_20">20s</string>
     <string name="pref_camera_focustime_entry_30">30s</string>
     <string name="pref_camera_focustime_entry_infinite">Infinite</string>
+
+     <!-- Settings screen, storage title -->
+     <string name="pref_camera_storage_title">Use External Storage</string>
+     <string name="pref_camera_storage_title_default">No</string>
 
 </resources>

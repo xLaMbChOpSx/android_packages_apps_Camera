@@ -37,7 +37,12 @@ import java.io.FileOutputStream;
 public class Storage {
     private static final String TAG = "CameraStorage";
 
-    private static String sStorage;
+    public static final String DCIM =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString();
+
+    // External SD DCIM (/storage/sdcard1 is android default external sd location)
+    public static final String EXTDCIM = "/storage/sdcard1/DCIM";
+    public static final String EXTMMC = "/storage/sdcard1";
 
     public static final long UNAVAILABLE = -1L;
     public static final long PREPARING = -2L;
@@ -209,32 +214,27 @@ public class Storage {
         }
     }
 
-    public static void setStorage(String storage) {
-        sStorage = storage;
-    }
-
-    public static String getStorage() {
-        return sStorage;
-    }
-
     public static String generateDCIM() {
-        return new File(sStorage, Environment.DIRECTORY_DCIM).toString();
+        // External DCIM check
+        if(!ActivityBase.mStorageExternal) {
+            return DCIM.toString();
+        } else {
+            return EXTDCIM.toString();
+        }
     }
 
-    public static String generateDirectory() {
+    public static String generateDir() {
+        // External DCIM check
         return generateDCIM() + "/Camera";
     }
 
     public static String generateFilepath(String title) {
-        return generateDirectory() + '/' + title + ".jpg";
-    }
-
-    public static String generateBucketId() {
-        return String.valueOf(generateDirectory().toLowerCase().hashCode());
+        // External DCIM check
+        return generateDir() + '/' + title + ".jpg";
     }
 
     public static int generateBucketIdInt() {
-        return generateDirectory().toLowerCase().hashCode();
+        return generateDir().toLowerCase().hashCode();
     }
 
     public static long getAvailableSpace() {
@@ -247,14 +247,14 @@ public class Storage {
             return UNAVAILABLE;
         }
 
-        File dir = new File(generateDirectory());
+        File dir = new File(generateDir());
         dir.mkdirs();
         if (!dir.isDirectory() || !dir.canWrite()) {
             return UNAVAILABLE;
         }
 
         try {
-            StatFs stat = new StatFs(generateDirectory());
+            StatFs stat = new StatFs(generateDir());
             return stat.getAvailableBlocks() * (long) stat.getBlockSize();
         } catch (Exception e) {
             Log.i(TAG, "Fail to access external storage", e);
